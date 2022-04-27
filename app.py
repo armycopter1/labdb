@@ -1,5 +1,4 @@
 import os
-import json
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
@@ -33,7 +32,7 @@ def after_request(response):
     return response
 
 # Setup email
-app.config["MAIL_DEFAULT_SENDER"] = 'kcprinter2019@gmail.com'
+app.config["MAIL_DEFAULT_SENDER"] = os.environ["MAIL_DEFAULT_SENDER"]
 app.config["MAIL_PASSWORD"] = 'YWExzCmvf5RsgF79'
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_SERVER"] = "smtp-relay.sendinblue.com"
@@ -44,6 +43,7 @@ mail = Mail(app)
 # <!--index, request, completed, active routes below -->
 
 @app.route("/")
+@app.route("index")
 # @login_required
 def index():
     """start page"""
@@ -66,8 +66,7 @@ def request_exp():
         return redirect("request_exp2")
 
     else:
-        # TODO - Clear any previous company sessions
-        # If request.method == "GET":
+        # If request.method == "GET" send a list of all customers in the table to form
         company_list = db.execute("SELECT id, company FROM customers ORDER BY company;")
         return render_template("request_exp.html", company_list=company_list)
 
@@ -88,8 +87,7 @@ def request_std():
         return redirect("request_std2")
 
     else:
-        # TODO - Clear any previous company sessions
-        # If request.method == "GET":
+        # If request.method == "GET" send list of all customers in table to the form
         company_list = db.execute("SELECT id, company FROM customers ORDER BY company;")
         return render_template("request_std.html", company_list=company_list)
 
@@ -110,7 +108,7 @@ def request_exp2():
         return redirect("request_exp3")
 
     else:
-        # If request.method == "GET":
+        # If request.method == "GET" send a list of all addresses associated with that customer
         address_list = db.execute("SELECT * FROM addresses WHERE cust_id = ?;", session["cust_id"])
         return render_template("request_exp2.html", address_list=address_list)
 
@@ -131,7 +129,7 @@ def request_std2():
         return redirect("request_std3")
 
     else:
-        # If request.method == "GET":
+        # If request.method == "GET" send a list of all addresses associated with that customer
         address_list = db.execute("SELECT * FROM addresses WHERE cust_id = ?;", session["cust_id"])
         return render_template("request_std2.html", address_list=address_list)
 
@@ -141,10 +139,10 @@ def request_exp3():
     """Enter a development request part 3"""
     if request.method =="POST":
 
-        # Get company name from request_ext
+        # Get contact name from request_ext3
         contact_id = request.form.get("contact")
 
-        # Get company ID to set session
+        # Get contact ID to set session
         rows  = db.execute("SELECT * FROM contacts WHERE id = ?;", contact_id)
         session["contact_id"] = rows[0]["id"]
 
@@ -152,7 +150,7 @@ def request_exp3():
         return redirect("request_exp4")
 
     else:
-        # If request.method == "GET":
+        # If request.method == "GET" return a list of all contacts associated with cust_id
         contact_list = db.execute("SELECT * FROM contacts WHERE cust_id = ?;", session["cust_id"])
         return render_template("request_exp3.html", contact_list=contact_list)
 
@@ -162,10 +160,10 @@ def request_std3():
     """Enter a development request part 3"""
     if request.method =="POST":
 
-        # Get company name from request_ext
+        # Get contact name from request_ext
         contact_id = request.form.get("contact")
 
-        # Get company ID to set session
+        # Get contact ID to set session
         rows  = db.execute("SELECT * FROM contacts WHERE id = ?;", contact_id)
         session["contact_id"] = rows[0]["id"]
 
@@ -173,7 +171,7 @@ def request_std3():
         return redirect("request_std4")
 
     else:
-        # If request.method == "GET":
+        # If request.method == "GET" return a list of all contacts associated with cust_id
         contact_list = db.execute("SELECT * FROM contacts WHERE cust_id = ?;", session["cust_id"])
         return render_template("request_std3.html", contact_list=contact_list)
 
@@ -219,12 +217,12 @@ def request_exp4():
                    , cust_id, add_id, contact_id, request_user_id, priority, date_required, exp_descrip, process, ship_request_method, part_descrip, color, material_type, clr_filled, supplied_mat, match_type, pantone, exact, sample_size, finish, fda, other_reg, cure_type, cure_time, cure_temp, pc_time, pc_temp, internal)
 
 
-        # Email the new registrant
-        message = Message("A new Development Request has been submitted!", recipients = ['h60blackhawk@hotmail.com'])
+        # Email the new development request to everyone
+        message = Message("A new Development Request has been submitted!", recipients = ['armycopter@gmail.com'])
         message.body = "A new request has been submitted for {} by {}. Please check database for more information.".format(customer, session["username"])
         mail.send(message)
 
-
+        # Show the user that the project was successfully logged
         flash('Project Submitted Successfully')
         return render_template('success.html')
 
@@ -240,7 +238,6 @@ def request_std4():
     """Enter a development request part 4"""
     if request.method =="POST":
         none = "none"
-        no = "No"
         cust_id = session["cust_id"]
         add_id = session["add_id"]
         contact_id = session["contact_id"]
@@ -254,16 +251,16 @@ def request_std4():
         customerlist = db.execute("SELECT company FROM customers WHERE id = ?;", cust_id)
         customer = customerlist[0]["company"]
 
-        # insert request into devrequest table
+        # insert request into stdrequest table
         db.execute("INSERT INTO stdrequest (cust_id, add_id, contact_id, request_user_id, priority, date_required, std_descrip, product, ship_request_method, sample_size) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
                    , cust_id, add_id, contact_id, request_user_id, priority, date_required, std_descrip, product, ship_request_method, sample_size)
 
-        # Email the new registrant
-        message = Message("A new Sample Request has been submitted!", recipients = ['h60blackhawk@hotmail.com'])
+        # Email everyone that a new standard request has been submitted
+        message = Message("A new Sample Request has been submitted!", recipients = ['armycopter@gmail.com'])
         message.body = "A new request has been submitted for {} by {}. Please check database for more information.".format(customer, session["username"])
         mail.send(message)
 
-
+        # Show the user that the project was successfully logged
         flash('Sample Request Submitted Successfully')
         return render_template('success.html')
 
@@ -321,13 +318,12 @@ def add_cust():
 @app.route("/add_add", methods=['POST'])
 def add_add():
     # Get company address from modal
-    none = "none"
-    add1 = request.form.get("add1") or none
-    add2 = request.form.get("add2") or none
-    city = request.form.get("city") or none
-    state = request.form.get("state") or none
-    zip = request.form.get("zip") or none
-    country = request.form.get("country") or none
+    add1 = request.form.get("add1")
+    add2 = request.form.get("add2")
+    city = request.form.get("city")
+    state = request.form.get("state")
+    zip = request.form.get("zip")
+    country = request.form.get("country")
 
     #Add into database
     db.execute("INSERT INTO addresses (add1, add2, city, state, zip, country, cust_id) VALUES(?, ?, ?, ?, ?, ?, ?);", add1, add2, city, state, zip, country, session["cust_id"])
@@ -351,24 +347,32 @@ def add_contact():
 def signoff():
     # If request method is POST, insert the signoff info from signoff page to devrequest table.
     if request.method == "POST":
-        none = "none"
         date_completed = request.form.get("date_completed")
-        matched = request.form.get("matched") or none
-        pphr_percent = request.form.get("pphr_percent") or none
-        exp_number = request.form.get("exp_number") or none
-        com_number = request.form.get("com_number") or none
-        total_hours = request.form.get("total_hours") or none
-        shipping_company = request.form.get("shipping_company") or none
-        ship_tracking = request.form.get("ship_tracking") or none
-        notes = request.form.get("notes") or none
+        matched = request.form.get("matched")
+        pphr_percent = request.form.get("pphr_percent")
+        exp_number = request.form.get("exp_number")
+        com_number = request.form.get("com_number")
+        total_hours = request.form.get("total_hours")
+        shipping_company = request.form.get("shipping_company")
+        ship_tracking = request.form.get("ship_tracking")
+        notes = request.form.get("notes")
 
+        # Update the devrequest table with new information
         db.execute("UPDATE devrequest SET date_completed = ?, matched = ?, pphr_percent = ?, exp_number = ?, com_number = ?, total_hours = ?, shipping_company = ?, ship_tracking = ?, notes = ?, completed_user_id = ? WHERE dr_id = ?;", date_completed, matched, pphr_percent, exp_number, com_number, total_hours, shipping_company, ship_tracking, notes, session["user_id"], session["record_ids"])
+        
+        # Email everyone that a new development request has been submitted
+        message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
+        message.body = "A new request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
+        mail.send(message)
+        
+        # Return user back to the open experiments table
         return redirect("experiments")
     else:
         # If for some reason, no record is returned, return an apology.
         session["record_ids"] = request.args.get("record_id")
         if not session["record_ids"]:
             return apology("no record")
+
         # If request method is GET, Get record ID from the row in open experiments page after clicking signoff
         else:
             results = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id WHERE dr_id = ?;", session["record_ids"])
@@ -379,12 +383,18 @@ def signoff():
 def std_signoff():
     # If request method is POST, insert the signoff info from signoff page to devrequest table.
     if request.method == "POST":
-        none = "none"
         date_completed = request.form.get("date_completed")
-        shipping_company = request.form.get("shipping_company") or none
-        ship_tracking = request.form.get("ship_tracking") or none
+        shipping_company = request.form.get("shipping_company")
+        ship_tracking = request.form.get("ship_tracking")
 
         db.execute("UPDATE stdrequest SET date_completed = ?, shipping_company = ?, ship_tracking = ?, completed_user_id = ? WHERE std_id = ?;", date_completed, shipping_company, ship_tracking, session["user_id"], session["record_ids"])
+        
+        # Email everyone that a new standard request has been submitted
+        message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
+        message.body = "A new request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
+        mail.send(message)
+
+        # Return user back to open standard requests
         return redirect("stds")
     else:
         # If for some reason, no record is returned, return an apology.
