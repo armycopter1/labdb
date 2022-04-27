@@ -43,7 +43,7 @@ mail = Mail(app)
 # <!--index, request, completed, active routes below -->
 
 @app.route("/")
-@app.route("index")
+@app.route("/index")
 # @login_required
 def index():
     """start page"""
@@ -235,7 +235,7 @@ def request_exp4():
 @app.route("/request_std4", methods=["GET", "POST"])
 @login_required
 def request_std4():
-    """Enter a development request part 4"""
+    """Enter a standard request part 4"""
     if request.method =="POST":
         none = "none"
         cust_id = session["cust_id"]
@@ -257,7 +257,8 @@ def request_std4():
 
         # Email everyone that a new standard request has been submitted
         message = Message("A new Sample Request has been submitted!", recipients = ['armycopter@gmail.com'])
-        message.body = "A new request has been submitted for {} by {}. Please check database for more information.".format(customer, session["username"])
+        # message.body = "A new request has been submitted for {} by {}. Please check database for more information.".format(customer, session["username"])
+        message.html = "<b>Hey {}</b>, sending you this tracker {} from my, lmk if it works.".format(customer, session["username"])
         mail.send(message)
 
         # Show the user that the project was successfully logged
@@ -362,7 +363,7 @@ def signoff():
         
         # Email everyone that a new development request has been submitted
         message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
-        message.body = "A new request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
+        message.body = "A development request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
         mail.send(message)
         
         # Return user back to the open experiments table
@@ -389,9 +390,9 @@ def std_signoff():
 
         db.execute("UPDATE stdrequest SET date_completed = ?, shipping_company = ?, ship_tracking = ?, completed_user_id = ? WHERE std_id = ?;", date_completed, shipping_company, ship_tracking, session["user_id"], session["record_ids"])
         
-        # Email everyone that a new standard request has been submitted
-        message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
-        message.body = "A new request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
+        # Email everyone that a new standard request has been signed off
+        message = Message("A Standard Request has been completed!", recipients = ['armycopter@gmail.com'])
+        message.body = "A standard request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
         mail.send(message)
 
         # Return user back to open standard requests
