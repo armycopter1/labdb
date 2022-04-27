@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Registration
+{% endblock %}
+
+{% block main %}
+    <h2>Please fill out the form below to register:</h2>
+    <p></p>
+    <!-- Create a form for users to submit a username and password -->
+    <form action="/register" method="POST">
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="username" type="text" placeholder="Choose a username">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="firstname" type="text" placeholder="First Name">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="lastname" type="text" placeholder="Last Name">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="useremail" type="text" placeholder="E-Mail Address">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="password" id="password" type="password" placeholder="password">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="confirmation" id="password" type="password" placeholder="confirm password">
+        </div>
+        <!--<input type="submit" value="Register">-->
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+{% endblock %}

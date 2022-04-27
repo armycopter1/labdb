@@ -1,0 +1,161 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Request 4
+{% endblock %}
+
+{% block main %}
+<div>
+  <h2> External Development Request - Part 4 of 4</h2>
+</div>
+<!--Nav Tabs-->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link disabled" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="false">Company</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link disabled" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-controls="address" aria-selected="false">Address</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link disabled" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="development-tab" data-bs-toggle="tab" data-bs-target="#development" type="button" role="tab" aria-controls="development" aria-selected="true">Development</button>
+      </li>
+  </ul>
+
+<!--Nav Tab-->
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="development" role="tabpanel" aria-labelledby="development-tab">
+      <h4 class="mt-2">Experiment Details</h4>
+      <p></p>
+      <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
+        <p><b>{{ company_info[0]["company"]  }}</b></p>
+        <p> {{ company_info[0]["add1"]  }} {{ company_info[0]["add2"]  }} {{ company_info[0]["city"]  }}, {{ company_info[0]["state"]  }} {{ company_info[0]["zip"]  }} {{ company_info[0]["country"]  }}</p>
+        <p> {{ company_info[0]["firstname"]  }}  {{ company_info[0]["lastname"]  }} <b>/</b> {{ company_info[0]["email"]  }} </p>
+      </div>
+
+<!-- form for input into dev request database-->
+      <form action="/request_exp4" method="POST">
+        <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
+          <p><b>Type a brief description of the project. Include any important information not selectable below.</b></p>
+           <label for="internal"><b>Is this an Internal Evaluation?</b></label>
+              <select name="internal" type="text">
+                <option disabled selected>Internal?</option>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+          <p><input class = "container-fluid" name="exp_descrip" type="text" placeholder="Project Description">
+          </p>
+        </div>
+        <div class = "row">
+          <div class = "column inputWrapper">
+            <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
+              <label for="priority"><b>Priority</b></label>
+              <select name="priority" type="text">
+                <option disabled selected>Priority</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+              <label for="date_required"><b>Date Required</b></label>
+              <input name="date_required" type="date" placeholder="Date required">
+              <label for="ship_request_method"><b>How to ship</b></label>
+              <select name="ship_request_method" type="text">
+              <option disabled selected><b>Freight Method</b></option>
+                <option value="UPS Next Day">UPS Next Day</option>
+                <option value="UPS 2nd Day">UPS 2nd Day</option>
+                <option value="UPS Ground">UPS Ground</option>
+                <option value="Other">Other</option>
+              </select>
+              <label for="part_descrip"><b>Part description</b></label>
+              <input name="part_descrip" type="text" placeholder="Part description">
+              <label for="process"><b>Process</b></label>
+              <select name="process" type="text">
+              <option disabled selected>Process</option>
+                <option value="Molding">Molding</option>
+                <option value="Extrusion">Extrusion</option>
+                <option value="LIM">LIM</option>
+                <option value="coating">Coating</option>
+              </select>
+              <label for="material_type"><b>Material Type</b></label>
+              <select name="material_type" type="text">
+              <option disabled selected>Material Type</option>
+                <option value="HCR">HCR</option>
+                <option value="LSR">LSR</option>
+                <option value="RTV">RTV</option>
+              </select>
+              <label for="clr_filled"><b>Clear or Filled</b></label>
+              <select name="clr_filled" type="text">
+              <option disabled selected>Clear or Filled</option>
+                <option value="Clear">Clear</option>
+                <option value="Filled">Filled</option>
+              </select>
+            </div>
+            </div>
+            <div class = "column inputWrapper">
+              <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
+              <label for="supplied_mat"><b>Supplied Material</b></label>
+              <input name="supplied_mat" type="text" placeholder="Supplied Mat">
+              <label for="match_type"><b>What to match</b></label>
+              <input name="match_type" type="text" placeholder="What to match">
+              <label for="color"><b>Color</b></label>
+              <select name="color" type"text">
+                <option disabled selected>Color</option>
+                <option style="background-color:red" value="Red">Red</option>
+                <option style="background-color:green" value="Green">Green</option>
+                <option style="background-color:blue" value="Blue">Blue</option>
+                <option style="background-color:yellow" value="Yellow">Yellow</option>
+                <option style="background-color:black" value="Black">Black</option>
+                <option style="background-color:brown" value="Brown">Brown</option>
+                <option style="background-color:purple" value="Violet">Violet</option>
+                <option style="background-color:white" value="White">White</option>
+                <option style="background-color:other" value="Other">Other</option>
+              </select>
+              <label for="pantone"><b>Pantone</b></label>
+              <input name="pantone" type="text" placeholder="Pantone">
+              <label for="exact"><b>Exact Match Req?</b></label>
+              <select name="exact" type="text">
+              <option disabled selected>Exact?</option>
+                <option value="yes">Yes</option>
+                <option value="close">Close</option>
+              </select>
+              <label for="sample_size"><b>Sample Size</b></label>
+              <input name="sample_size" type="text" placeholder="Sample Size">
+              <label for="finish"><b>Finish?</b></label>
+              <select name="finish" type="text">
+              <option disabled selected>Finish?</option>
+                <option value="gloss">Gloss</option>
+                <option value="matte">Matte</option>
+              </select>
+            </div>
+            </div>
+            <div class = "column inputWrapper">
+              <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
+              <label for="fda"><b>FDA?</b></label>
+              <select name="fda" type="text">
+              <option disabled selected>FDA?</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+              <label for="other_reg"><b>Other Regs</b></label>
+              <input name="Other_reg" type="text" placeholder="Other Regs">
+              <label for="cure_type"><b>Cure Type</b></label>
+              <input name="cure_type" type="text" placeholder="Cure Type">
+              <label for="cure_time"><b>Cure Time</b></label>
+              <input name="cure_time" type="text" placeholder="Cure Time">
+              <label for="cure_temp"><b>Cure Temp</b></label>
+              <input name="cure_temp" type="text" placeholder="Cure Temp">
+              <label for="pc_time"><b>Post Cure Time</b></label>
+              <input name="pc_time" type="text" placeholder="Post Cure Time">
+              <label for="pc_temp"><b>Post Cure Temp</b></label>
+              <input name="pc-temp" type="text" placeholder="Post Cure Temp">
+            </div>
+          </div>
+    </div>
+    <div>
+      <!--Select customer from drop down list-->
+      <button class="btn btn-primary" type="submit">Submit Request</button>
+      </div>
+  </div>
+{% endblock %}

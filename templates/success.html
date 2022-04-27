@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Success
+{% endblock %}
+
+{% block main %}
+
+   <div class mb-3>
+      {% with messages = get_flashed_messages() %}
+         {% if messages %}
+            {% for message in messages %}
+               {{ message }}
+            {% endfor %}
+         {% endif %}
+      {% endwith %}
+   </div>
+
+<button class="nav-item active button"><a class="nav-link" href="/">Home</a></button>
+
+{% endblock %}

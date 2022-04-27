@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   History
+{% endblock %}
+
+<!--some code borrowed from https://stackoverflow.com/questions/61987454/how-to-make-bootstrap-table-filter-control-work-with-flask-jinja-and-dataframe-->
+
+{% block main %}
+<body>
+  <div class="container">
+                        <table id="table"
+                        data-toggle="table"
+                        data-filter-control="true"
+                        data-show-search-clear-button="true"
+                        data-sortable="true"
+                        classes="table-sm"
+                        data-pagination="true"
+                        data-show-columns="true"
+                        data-show-columns-toggle-all="true"
+                        data-click-to-select="true"
+                        data-id-field="dr_id"
+                        data-detail-view="true"
+                        data-detail-formatter="detailFormatterHist"
+                        class="table-responsive">
+                  <thead>
+                      <tr>
+                          <!--special characters and spaces not allowed in data-field name-->
+                          <th data-field="company" data-filter-control="select" data-sortable="true">Company</th>
+                          <th data-field="part_descrip" data-filter-control="select" data-sortable="true">Part Description</th>
+                          <th data-field="exp_number" data-filter-control="select" data-sortable="true">Part Description</th>
+                          <th data-field="date_created" data-filter-control="select" data-sortable="true">Date Requested</th>
+                          <th data-field="date_required" data-filter-control="select" data-sortable="true">Date Required</th>
+                          <th data-field="date_completed" data-filter-control="select" data-sortable="true">Date Completed</th>
+                          <th data-field="exp_descrip" data-filter-control="select" data-sortable="true" data-visible="false">Description</th>
+                          <th data-field="matched" data-filter-control="select" data-sortable="true" data-visible="false">Matched?</th>
+                          <th data-field="pphr_percent" data-filter-control="select" data-sortable="true" data-visible="false">Loading</th>
+                          <th data-field="com_number" data-filter-control="select" data-sortable="true" data-visible="false">Commercial Number</th>
+                          <th data-field="total_hours" data-filter-control="select" data-sortable="true" data-visible="false">Lab Hours</th>
+                          <th data-field="shipping_company" data-filter-control="select" data-sortable="true" data-visible="false">Shipped By</th>
+                          <th data-field="ship_tracking" data-filter-control="select" data-sortable="true" data-visible="false">Tracking Number</th>
+                          <th data-field="notes" data-filter-control="select" data-sortable="true" data-visible="false">Notes</th>
+                          <th data-field="dr_id" data-filter-control="select" data-sortable="true" data-visible="false">ID</th>
+                          <th data-field="lastname" data-filter-control="select" data-sortable="true" data-visible="false">Submitted By</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for row in tableA %}
+                      <tr>
+                          <!--special characters and spaces not allowed in data-field name-->
+                          <td>{{ row.company }}</td>
+                          <td>{{ row.part_descrip }}</td>
+                          <td>{{ row.exp_number }}</td>
+                          <td>{{ row.date_created }}</td>
+                          <td>{{ row.date_required }}</td>
+                          <td>{{ row.date_completed }}</td>
+                          <td>{{ row.exp_descrip }}</td>
+                          <td>{{ row.matched }}</td>
+                          <td>{{ row.pphr_percent }}</td>
+                          <td>{{ row.com_number }}</td>
+                          <td>{{ row.total_hours }}</td>
+                          <td>{{ row.shipping_company }}</td>
+                          <td>{{ row.ship_tracking }}</td>
+                          <td>{{ row.notes}}</td>
+                          <td>{{ row.dr_id }}</td>
+                          <td>{{ row.lastname }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+        </div>
+{% endblock %}

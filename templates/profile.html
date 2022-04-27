@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block main %}
+
+<form action="/profile" method="POST">
+    <div class = "container">
+        <div class="row">
+            <div class = "col">
+                <h2>Current Information</h2>
+                <div class="mb-3">
+                    <p><b>{{  user_info[0]["firstname"]  }}</b></p>
+                </div>
+                <div class="mb-3">
+                    <p><b>{{  user_info[0]["lastname"]  }}</b></p>
+                </div>
+                <div class="mb-3">
+                    <p><b>{{  user_info[0]["useremail"]  }}</b></p>
+                </div>
+            </div>
+            <div class = "col">
+                <h2>Submit Changes</h2>
+                <div class="mb-3">
+                    <input autocomplete="off" class="form-control mx-auto w-auto" name="firstname" type="text" placeholder="First Name">
+                </div>
+                <div class="mb-3">
+                    <input autocomplete="off" class="form-control mx-auto w-auto" name="lastname" type="text" placeholder="Last Name">
+                </div>
+                <div class="mb-3">
+                    <input autocomplete="off" class="form-control mx-auto w-auto" name="useremail" type="text" placeholder="E-Mail Address">
+                </div>
+                <div class="mb-3">
+                    <input autocomplete="off" class="form-control mx-auto w-auto" name="password" id="password" type="password" placeholder="password">
+                </div>
+                <div class="mb-3">
+                    <input autocomplete="off" class="form-control mx-auto w-auto" name="confirmation" id="password" type="password" placeholder="confirm password">
+                </div>
+                <!--<input type="submit" value="Register">-->
+                <button class="btn btn-primary" type="submit">Update Profile</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

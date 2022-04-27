@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Signoff
+{% endblock %}
+
+{% block main %}
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="development" role="tabpanel" aria-labelledby="development-tab">
+        <h4 class="mt-2">Sign Off Experiment</h4>
+        <p></p>
+        <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
+            <p><b>{{ results[0]["company"]  }}</b></p>
+            <p> {{ results[0]["firstname"]  }}  {{ results[0]["lastname"]  }} <b>/</b> {{ results[0]["email"]  }} </p>
+    </div>
+
+    <form action="/signoff" method="POST">
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="date_completed" type="date" placeholder="Date Completed">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="matched" type="text" placeholder="Matched?">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="pphr_percent" type="text" placeholder="PPHR or Percent">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="exp_number" type="text" placeholder="Experiment Number">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="com_number" type="text" placeholder="Commercial Number">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="total_hours" type="text" placeholder="Total Hours">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="shipping_company" type="text" placeholder="Shipping Company">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" name="ship_tracking" type="text" placeholder="Tracking Number">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" class="container-fluid" name="notes" type="text" placeholder="Notes">
+        </div>
+        <!--<input type="submit" value="Register">-->
+        <button class="btn btn-primary" type="submit">Signoff</button>
+    </form>
+{% endblock %}

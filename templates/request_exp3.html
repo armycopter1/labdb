@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Request 3
+{% endblock %}
+
+{% block main %}
+<div>
+  <h2> External Development Request - Part 3 of 4</h2>
+</div>
+<!--Nav Tabs-->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link disabled" id="company-tab" data-bs-toggle="tab" data-bs-target="#company" type="button" role="tab" aria-controls="company" aria-selected="false">Company</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link disabled" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button" role="tab" aria-controls="address" aria-selected="false">Address</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="true">Contact</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link disabled" id="development-tab" data-bs-toggle="tab" data-bs-target="#development" type="button" role="tab" aria-controls="development" aria-selected="false">Development</button>
+      </li>
+  </ul>
+
+<!--Nav Tab-->
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      <h4 class="mt-2">Contact</h4>
+      <p>Please select a contact from the dropdown or add new.</p>
+      <form action="/request_exp3" method="POST">
+            <div class="mb-3">
+                <select class="form-select w-auto mx-auto" name="contact">
+                    <option disabled selected>Contact...</option>
+                    {% for row in contact_list %}
+                    <option value="{{  row.id  }}">{{ row.firstname }} {{ row.lastname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!--Select contact from drop down list-->
+            <button class="btn btn-primary btn-space" type="submit">Select</button>
+          </form>
+    </div>
+  <!-- Button trigger modal -->
+
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addcompmodal">
+    Add New Contact
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addcompmodal" tabindex="-1" aria-labelledby="addcompmodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addcompmodalLabel">New Contact</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/add_contact" method="POST">
+              <input autocomplete="off" class="form-control mx-auto w-auto" name="firstname" type="text" placeholder="First Name">
+              <input autocomplete="off" class="form-control mx-auto w-auto" name="lastname" type="text" placeholder="Last Name">
+              <input autocomplete="off" class="form-control mx-auto w-auto" name="phone" type="text" placeholder="Phone xxx-xxx-xxxx">
+              <input autocomplete="off" class="form-control mx-auto w-auto" name="email" type="email" placeholder="Email">
+              <button class="btn btn-primary btn-space">Submit</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+ </div>
+  {% endblock %}

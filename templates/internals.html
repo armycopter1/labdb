@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Experiments
+{% endblock %}
+
+<!--some code borrowed from https://stackoverflow.com/questions/61987454/how-to-make-bootstrap-table-filter-control-work-with-flask-jinja-and-dataframe-->
+
+{% block main %}
+<body>
+    <div>
+        <h2>Open Internal Development Requests</h2>
+    </div>
+  <div class="container">
+                        <table id="table"
+                        data-toggle="table"
+                        data-filter-control="true"
+                        data-show-search-clear-button="true"
+                        data-sortable="true"
+                        classes="table-sm"
+                        data-pagination="true"
+                        data-show-columns="true"
+                        data-show-columns-toggle-all="true"
+                        data-click-to-select="true"
+                        data-id-field="dr_id"
+                        data-detail-view="true"
+                        data-detail-formatter="detailFormatter"
+                        class="table-responsive">
+                  <thead>
+                      <tr>
+                          <!--special characters and spaces not allowed in data-field name-->
+                          <th scope="col">Signoff</th>
+                          <th data-field="priority" data-filter-control="select" data-sortable="true">Priority</th>
+                          <th data-field="date_required" data-filter-control="select" data-sortable="true">Date Required</th>
+                          <th data-field="company" data-filter-control="select" data-sortable="true">Company</th>
+                          <th data-field="part_descrip" data-filter-control="select" data-sortable="true">Part Description</th>
+                          <th data-field="color" data-filter-control="select" data-sortable="true">Color</th>
+                          <th data-field="process" data-filter-control="select" data-sortable="true">Process</th>
+                          <th data-field="material_type" data-filter-control="select" data-sortable="true">Type</th>
+                          <th data-field="clr_filled" data-filter-control="select" data-sortable="true">Clear/Filled</th>
+                          <th data-field="exact" data-filter-control="select" data-sortable="true">Exact?</th>
+                          <th data-field="finish" data-filter-control="select" data-sortable="true">Finish</th>
+                          <th data-field="fda" data-filter-control="select" data-sortable="true">FDA?</th>
+                          <th data-field="exp_descrip" data-filter-control="select" data-sortable="true" data-visible="false">Description</th>
+                          <th data-field="ship_request_method" data-filter-control="select" data-sortable="true" data-visible="false">Ship Request Method</th>
+                          <th data-field="dr_id" data-filter-control="select" data-sortable="true" data-visible="false">ID</th>
+                          <th data-field="supplied_material" data-filter-control="select" data-sortable="true" data-visible="false">Supplied Material</th>
+                          <th data-field="match_type" data-filter-control="select" data-sortable="true" data-visible="false">Material Type</th>
+                          <th data-field="pantone" data-filter-control="select" data-sortable="true" data-visible="false">Pantone</th>
+                          <th data-field="sample_size" data-filter-control="select" data-sortable="true" data-visible="false">Sample Size</th>
+                          <th data-field="other_reg" data-filter-control="select" data-sortable="true" data-visible="false">Other Reg</th>
+                          <th data-field="cure_type" data-filter-control="select" data-sortable="true" data-visible="false">Cure Type</th>
+                          <th data-field="cure_time" data-filter-control="select" data-sortable="true" data-visible="false">Cure Time</th>
+                          <th data-field="cure_temp" data-filter-control="select" data-sortable="true" data-visible="false">Cure Temp</th>
+                          <th data-field="pc_time" data-filter-control="select" data-sortable="true" data-visible="false">Post Cure Time</th>
+                          <th data-field="pc_temp" data-filter-control="select" data-sortable="true" data-visible="false">Post Cure Temp</th>
+                          <th data-field="lastname" data-filter-control="select" data-sortable="true" data-visible="false">Submitted By</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for row in tableA %}
+                      <tr>
+                          <!--special characters and spaces not allowed in data-field name-->
+                          <td><a href="{{ url_for("signoff", record_id = row["dr_id"]) }}"><input type="submit" name="edit_btn" value="Signoff"></input></a></td>
+                          <td>{{ row.priority }}</td>
+                          <td>{{ row.date_required }}</td>
+                          <td>{{ row.company }}</td>
+                          <td>{{ row.part_descrip }}</td>
+                          <td>{{ row.color }}</td>
+                          <td>{{ row.process }}</td>
+                          <td>{{ row.material_type }}</td>
+                          <td>{{ row.clr_filled }}</td>
+                          <td>{{ row.exact }}</td>
+                          <td>{{ row.finish }}</td>
+                          <td>{{ row.fda}}</td>
+                          <td>{{ row.exp_descrip }}</td>
+                          <td>{{ row.ship_request_method }}</td>
+                          <td>{{ row.dr_id }}</td>
+                          <td>{{ row.supplied_material }}</td>
+                          <td>{{ row.match_type }}</td>
+                          <td>{{ row.pantone }}</td>
+                          <td>{{ row.sample_size }}</td>
+                          <td>{{ row.other_reg }}</td>
+                          <td>{{ row.cure_type }}</td>
+                          <td>{{ row.cure_time }}</td>
+                          <td>{{ row.cure_temp }}</td>
+                          <td>{{ row.pc_time }}</td>
+                          <td>{{ row.pc_temp }}</td>
+                          <td>{{ row.lastname }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+            </div>
+{% endblock %}
