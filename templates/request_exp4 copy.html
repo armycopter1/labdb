@@ -37,67 +37,57 @@ Request 4
 
 <!-- form for input into dev request database-->
       <form action="/request_exp4" method="POST">
-        <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px;">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="internal">Internal</label>
-            </div>
-            <select class="custom-select" id="internal">
-              <option selected>Choose...</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-        </div>
         <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class = "input-group-text" for="ext_descrip">Description of Project</label>
-            </div>
-          </div>
-              <input class = "container-fluid" name="exp_descrip" type="text" placeholder="//Type Description Here//">
-            </div>
+          <p><b>Type a brief description of the project. Include any important information not selectable below.</b></p>
+           <label for="internal"><b>Is this an Internal Evaluation?</b></label>
+              <select name="internal" type="text">
+                <option disabled selected>Internal?</option>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+          <p><input class = "container-fluid" name="exp_descrip" type="text" placeholder="Project Description">
+          </p>
         </div>
         <div class = "row">
           <div class = "column inputWrapper">
             <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
               <label for="priority"><b>Priority</b></label>
-              <select name="priority" type="text" class = "form-control">
-                <option disabled selected>Select</option>
+              <select name="priority" type="text">
+                <option disabled selected>Priority</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
               </select>
               <label for="date_required"><b>Date Required</b></label>
-              <input name="date_required" type="date" placeholder="Date required" class = "form-control">
+              <input name="date_required" type="date" placeholder="Date required">
               <label for="ship_request_method"><b>How to ship</b></label>
-              <select name="ship_request_method" type="text" class = "selectpicker form-control">
-              <option disabled selected><b>Select</b></option>
+              <select name="ship_request_method" type="text">
+              <option disabled selected><b>Freight Method</b></option>
                 <option value="UPS Next Day">UPS Next Day</option>
                 <option value="UPS 2nd Day">UPS 2nd Day</option>
                 <option value="UPS Ground">UPS Ground</option>
                 <option value="Other">Other</option>
               </select>
               <label for="part_descrip"><b>Part description</b></label>
-              <input name="part_descrip" type="text" placeholder="Part description" class = "form-control">
+              <input name="part_descrip" type="text" placeholder="Part description">
               <label for="process"><b>Process</b></label>
-              <select name="process" type="text" class = "selectpicker form-control">
-              <option disabled selected>Select</option>
+              <select name="process" type="text">
+              <option disabled selected>Process</option>
                 <option value="Molding">Molding</option>
                 <option value="Extrusion">Extrusion</option>
                 <option value="LIM">LIM</option>
                 <option value="coating">Coating</option>
               </select>
               <label for="material_type"><b>Material Type</b></label>
-              <select name="material_type" type="text" class = "selectpicker form-control">
-              <option disabled selected>Select</option>
+              <select name="material_type" type="text">
+              <option disabled selected>Material Type</option>
                 <option value="HCR">HCR</option>
                 <option value="LSR">LSR</option>
                 <option value="RTV">RTV</option>
               </select>
               <label for="clr_filled"><b>Clear or Filled</b></label>
-              <select name="clr_filled" type="text" class = "selectpicker form-control">
-              <option disabled selected>Select</option>
+              <select name="clr_filled" type="text">
+              <option disabled selected>Clear or Filled</option>
                 <option value="Clear">Clear</option>
                 <option value="Filled">Filled</option>
               </select>
@@ -106,12 +96,12 @@ Request 4
             <div class = "column inputWrapper">
               <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
               <label for="supplied_mat"><b>Supplied Material</b></label>
-              <input name="supplied_mat" type="text" placeholder="Supplied Mat" class = "form-control">
+              <input name="supplied_mat" type="text" placeholder="Supplied Mat">
               <label for="match_type"><b>What to match</b></label>
-              <input name="match_type" type="text" placeholder="What to match" class = "form-control">
+              <input name="match_type" type="text" placeholder="What to match">
               <label for="color"><b>Color</b></label>
-              <select name="color" type"text" class = "selectpicker form-control">
-                <option disabled selected>Select</option>
+              <select name="color" type"text">
+                <option disabled selected>Color</option>
                 <option style="background-color:red" value="Red">Red</option>
                 <option style="background-color:green" value="Green">Green</option>
                 <option style="background-color:blue" value="Blue">Blue</option>
@@ -123,18 +113,18 @@ Request 4
                 <option style="background-color:other" value="Other">Other</option>
               </select>
               <label for="pantone"><b>Pantone</b></label>
-              <input name="pantone" type="text" placeholder="Pantone" class = "form-control">
+              <input name="pantone" type="text" placeholder="Pantone">
               <label for="exact"><b>Exact Match Req?</b></label>
-              <select name="exact" type="text" class = "selectpicker form-control">
-              <option disabled selected>Select</option>
+              <select name="exact" type="text">
+              <option disabled selected>Exact?</option>
                 <option value="yes">Yes</option>
                 <option value="close">Close</option>
               </select>
               <label for="sample_size"><b>Sample Size</b></label>
-              <input name="sample_size" type="text" placeholder="Sample Size" class = "form-control">
+              <input name="sample_size" type="text" placeholder="Sample Size">
               <label for="finish"><b>Finish?</b></label>
-              <select name="finish" type="text" class = "selectpicker form-control">
-              <option disabled selected>Select</option>
+              <select name="finish" type="text">
+              <option disabled selected>Finish?</option>
                 <option value="gloss">Gloss</option>
                 <option value="matte">Matte</option>
               </select>
@@ -143,23 +133,23 @@ Request 4
             <div class = "column inputWrapper">
               <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
               <label for="fda"><b>FDA?</b></label>
-              <select name="fda" type="text" class = "selectpicker form-control">
-              <option disabled selected>Select</option>
+              <select name="fda" type="text">
+              <option disabled selected>FDA?</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
               </select>
               <label for="other_reg"><b>Other Regs</b></label>
-              <input name="Other_reg" type="text" placeholder="Other Regs" class = "form-control">
+              <input name="Other_reg" type="text" placeholder="Other Regs">
               <label for="cure_type"><b>Cure Type</b></label>
-              <input name="cure_type" type="text" placeholder="Cure Type" class = "form-control">
+              <input name="cure_type" type="text" placeholder="Cure Type">
               <label for="cure_time"><b>Cure Time</b></label>
-              <input name="cure_time" type="text" placeholder="Cure Time" class = "form-control">
+              <input name="cure_time" type="text" placeholder="Cure Time">
               <label for="cure_temp"><b>Cure Temp</b></label>
-              <input name="cure_temp" type="text" placeholder="Cure Temp" class = "form-control">
+              <input name="cure_temp" type="text" placeholder="Cure Temp">
               <label for="pc_time"><b>Post Cure Time</b></label>
-              <input name="pc_time" type="text" placeholder="Post Cure Time" class = "form-control">
+              <input name="pc_time" type="text" placeholder="Post Cure Time">
               <label for="pc_temp"><b>Post Cure Temp</b></label>
-              <input name="pc-temp" type="text" placeholder="Post Cure Temp" class = "form-control">
+              <input name="pc-temp" type="text" placeholder="Post Cure Temp">
             </div>
           </div>
     </div>
