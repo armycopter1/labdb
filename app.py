@@ -219,7 +219,7 @@ def request_exp4():
 
         # Email the new development request to everyone
         message = Message("A new Development Request has been submitted!", recipients = ['armycopter@gmail.com'])
-        message.body = "A new request has been submitted for {} by {}. Please check database for more information.".format(customer, session["username"])
+        message.html = "<b>NEW DEVELOPMENT REQUEST</b> <p><b>Customer: </b>{}</p> <p><b>Priority: </b>{}</p> <p><b>Date Required: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Ship Method: </b>{}</p> <p><b>Requested By: </b>{}</p>".format(customer, priority, date_required, exp_descrip, ship_request_method, session["username"])
         mail.send(message)
 
         # Show the user that the project was successfully logged
@@ -257,7 +257,6 @@ def request_std4():
 
         # Email everyone that a new standard request has been submitted
         message = Message("A new Sample Request has been submitted!", recipients = ['armycopter@gmail.com'])
-        # message.body = "A new request has been submitted for {} by {}. Please check database for more information.".format(customer, session["username"])
         message.html = "<b>NEW SAMPLE REQUEST</b> <p><b>Customer: </b>{}</p> <p><b>Product: </b>{}</p> <p><b>Priority: </b>{}</p> <p><b>Date Required: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Ship Method: </b>{}</p> <p><b>Sample Size: </b>{}</p> <p><b>Requested By: </b>{}</p>".format(customer, product, priority, date_required, std_descrip, ship_request_method, sample_size, session["username"])
         mail.send(message)
 
@@ -363,7 +362,7 @@ def signoff():
         
         # Email everyone that a new development request has been submitted
         message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
-        message.body = "A development request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
+        message.html = "A Development request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
         mail.send(message)
         
         # Return user back to the open experiments table
@@ -392,7 +391,7 @@ def std_signoff():
         
         # Email everyone that a new standard request has been signed off
         message = Message("A Standard Request has been completed!", recipients = ['armycopter@gmail.com'])
-        message.body = "A standard request has been completed. Shipped by {} tracking number {}.".format(shipping_company, ship_tracking)
+        message.html = "A standard sample request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
         mail.send(message)
 
         # Return user back to open standard requests
