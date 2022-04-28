@@ -361,9 +361,9 @@ def signoff():
         db.execute("UPDATE devrequest SET date_completed = ?, matched = ?, pphr_percent = ?, exp_number = ?, com_number = ?, total_hours = ?, shipping_company = ?, ship_tracking = ?, notes = ?, completed_user_id = ? WHERE dr_id = ?;", date_completed, matched, pphr_percent, exp_number, com_number, total_hours, shipping_company, ship_tracking, notes, session["user_id"], session["record_ids"])
         
         # Email everyone that a new development request has been submitted
-        #message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
-        #message.html = "A Development request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
-        #mail.send(message)
+        message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
+        message.html = "A Development request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
+        mail.send(message)
         
         # Return user back to the open experiments table
         return redirect("experiments")

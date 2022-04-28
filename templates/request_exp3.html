@@ -31,8 +31,8 @@ Request 3
       <p>Please select a contact from the dropdown or add new.</p>
       <form action="/request_exp3" method="POST">
             <div class="mb-3">
-                <select class="form-select w-auto mx-auto" name="contact">
-                    <option disabled selected>Contact...</option>
+                <select class="form-control" name="contact">
+                    <option disabled selected>Select</option>
                     {% for row in contact_list %}
                     <option value="{{  row.id  }}">{{ row.firstname }} {{ row.lastname }}</option>
                     {% endfor %}

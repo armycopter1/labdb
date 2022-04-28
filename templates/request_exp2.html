@@ -31,8 +31,8 @@ Request 2
       <p>Please select an address from the dropdown or add new.</p>
         <form action="/request_exp2" method="POST">
             <div class="mb-3">
-                <select class="form-select w-auto mx-auto" name="address">
-                    <option disabled selected>Address...</option>
+                <select class="form-control" name="address">
+                    <option disabled selected>Select</option>
                     {% for row in address_list %}
                     <option value="{{  row.id  }}">{{ row.add1 }}, {{ row.add2 }}, {{ row.city }}, {{ row.state }}, {{ row.zip }}, {{ row.country}}</option>
                     {% endfor %}

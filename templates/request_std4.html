@@ -35,36 +35,40 @@ Request 4
         <p> {{ company_info[0]["firstname"]  }}  {{ company_info[0]["lastname"]  }} <b>/</b> {{ company_info[0]["email"]  }} </p>
       </div>
 
-<!-- form for input into dev request database-->
+<!-- form for input into std request database-->
       <form action="/request_std4" method="POST">
         <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
-          <p><b>Type a brief description of the request. Include any important information not selectable below.</b></p>
-          <p><input class = "container-fluid" name="std_descrip" type="text" placeholder="Project Description"></p>
-        </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class = "input-group-text" for="std_descrip">Description of Request</label>
+            </div>
+          </div>
+              <input class = "container-fluid" name="std_descrip" type="text" placeholder="//Type Request Details Here//">
+            </div>
         <div class = "row">
           <div class = "column inputWrapper container-fluid">
             <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
               <label for="priority"><b>Priority</b></label>
-              <select name="priority" type="text">
-                <option disabled selected>Priority</option>
+              <select name="priority" type="text" class = "form-control">
+                <option disabled selected>Select</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
               </select>
               <label for="date_required"><b>Date Required</b></label>
-              <input name="date_required" type="date" placeholder="Date required">
+              <input name="date_required" type="date" placeholder="Date required" class = "form-control">
               <label for="ship_request_method"><b>How to ship</b></label>
-              <select name="ship_request_method" type="text">
-              <option disabled selected><b>Freight Method</b></option>
+              <select name="ship_request_method" type="text" class = "form-control">
+              <option disabled selected><b>Select</b></option>
                 <option value="UPS Next Day">UPS Next Day</option>
                 <option value="UPS 2nd Day">UPS 2nd Day</option>
                 <option value="UPS Ground">UPS Ground</option>
                 <option value="Other">Other</option>
               </select>
               <label for="product"><b>Product</b></label>
-              <input name="product" type="text" placeholder="Product">
+              <input name="product" type="text" placeholder="Product" class = "form-control">
               <label for="sample_size"><b>Sample Size</b></label>
-              <input name="sample_size" type="text" placeholder="Sample Size">
+              <input name="sample_size" type="text" placeholder="Sample Size" class = "form-control">
             </div>
             </div>
           </div>
