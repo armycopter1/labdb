@@ -245,7 +245,7 @@ def request_std4():
         product = request.form.get("product") or none
         priority = request.form.get("priority") or none
         date_required = request.form.get("date_required") or none
-        std_descrip = request.form.get("exp_descrip") or none
+        std_descrip = request.form.get("std_descrip") or none
         ship_request_method = request.form.get("ship_request_method") or none
         sample_size = request.form.get("sample_size") or none
         customerlist = db.execute("SELECT company FROM customers WHERE id = ?;", cust_id)
@@ -258,7 +258,7 @@ def request_std4():
         # Email everyone that a new standard request has been submitted
         message = Message("A new Sample Request has been submitted!", recipients = ['armycopter@gmail.com'])
         # message.body = "A new request has been submitted for {} by {}. Please check database for more information.".format(customer, session["username"])
-        message.html = "<b>Hey {}</b>, sending you this tracker {} from my, lmk if it works.".format(customer, session["username"])
+        message.html = "<b>NEW SAMPLE REQUEST</b> <p><b>Customer: </b>{}</p> <p><b>Product: </b>{}</p> <p><b>Priority: </b>{}</p> <p><b>Date Required: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Ship Method: </b>{}</p> <p><b>Sample Size: </b>{}</p> <p><b>Requested By: </b>{}</p>".format(customer, product, priority, date_required, std_descrip, ship_request_method, sample_size, session["username"])
         mail.send(message)
 
         # Show the user that the project was successfully logged
