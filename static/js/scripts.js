@@ -112,6 +112,24 @@ function detailFormatter2(index, row) {
         if(key=="std_descrip") {
             html.push('<p><b>Experiment Description: </b> ' + value + '</p>')
         }
+        if(key=="priority") {
+            html.push('<p><b>Requested Priority: </b> ' + value + '</p>')
+        }
+        if(key=="ship_request_method") {
+            html.push('<p><b>Shipping Requested: </b> ' + value + '</p>')
+        }
+        if(key=="shipping_company") {
+            html.push('<p><b>Actual Ship Method: </b> ' + value + '</p>')
+        }
+        if(key=="ship_tracking") {
+            html.push('<p><b>Tracking Number: </b> ' + value + '</p>')
+        }
+        if(key=="sample_size") {
+            html.push('<p><b>Sample Size: </b> ' + value + '</p>')
+        }
+        if(key=="lastname") {
+            html.push('<p><b>Requestor: </b> ' + value + '</p>')
+        }
     })
     return html.join('')
 }

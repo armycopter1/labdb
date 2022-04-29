@@ -26,28 +26,36 @@
                   <thead>
                       <tr>
                           <!--special characters and spaces not allowed in data-field name-->
-                          <th data-field="std_descrip" data-filter-control="select" data-sortable="true" data-visible="false">Description</th>
-                          <th data-field="std_id" data-filter-control="select" data-sortable="true" data-visible="false">ID</th>
-                          <th data-field="priority" data-filter-control="select" data-sortable="true">Priority</th>
-                          <th data-field="date_required" data-filter-control="select" data-sortable="true">Date Required</th>
                           <th data-field="company" data-filter-control="select" data-sortable="true">Company</th>
                           <th data-field="product" data-filter-control="select" data-sortable="true">Product</th>
-                          <th data-field="ship_request_method" data-filter-control="select" data-sortable="true">Ship Rqst Mthd</th>
-                          <th data-field="sample_size" data-filter-control="select" data-sortable="true">Sample Size</th>
-                          <th data-field="lastname" data-filter-control="select" data-sortable="true">Submitted By</th>
+                          <th data-field="date_created" data-filter-control="select" data-sortable="true">Date Requested</th>
+                          <th data-field="date_required" data-filter-control="select" data-sortable="true">Date Required</th>
+                          <th data-field="date_completed" data-filter-control="select" data-sortable="true">Date Completed</th>
+                          <th data-field="std_descrip" data-filter-control="select" data-sortable="true" data-visible="false">Description</th>
+                          <th data-field="std_id" data-filter-control="select" data-sortable="true" data-visible="false">ID</th>
+                          <th data-field="priority" data-filter-control="select" data-sortable="true" data-visible="false">Priority</th>
+                          <th data-field="ship_request_method" data-filter-control="select" data-sortable="true" data-visible="false">Ship Rqst Mthd</th>
+                          <th data-field="shipping_company" data-filter-control="select" data-sortable="true" data-visible="false">Shipped By</th>
+                          <th data-field="ship_tracking" data-filter-control="select" data-sortable="true" data-visible="false">Tracking Number</th>
+                          <th data-field="sample_size" data-filter-control="select" data-sortable="true" data-visible="false">Sample Size</th>
+                          <th data-field="lastname" data-filter-control="select" data-sortable="true" data-visible="false">Submitted By</th>
                       </tr>
                   </thead>
                   <tbody>
                       {% for row in tableA %}
                       <tr>
                           <!--special characters and spaces not allowed in data-field name-->
-                          <td>{{ row.std_descrip }}</td>
-                          <td>{{ row.std_id }}</td>
-                          <td>{{ row.priority }}</td>
-                          <td>{{ row.date_required }}</td>
                           <td>{{ row.company }}</td>
                           <td>{{ row.product }}</td>
+                          <td>{{ row.date_created }}</td>
+                          <td>{{ row.date_required }}</td>
+                          <td>{{ row.date_completed }}</td>
+                          <td>{{ row.std_descrip }}</td>
+                          <td>{{ row.std_id }}</td>
+                          <td>{{ row.priority }}</td>                   
                           <td>{{ row.ship_request_method }}</td>
+                          <td>{{ row.shipping_company }}</td>
+                          <td>{{ row.ship_tracking }}</td>
                           <td>{{ row.sample_size }}</td>
                           <td>{{ row.lastname }}</td>
                       </tr>

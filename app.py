@@ -533,7 +533,10 @@ def profile():
 
         # insert username info into database
         db.execute("UPDATE users SET hash = ?, firstname = ?, lastname = ?, useremail = ? WHERE id = ?;", generate_password_hash(password), firstname, lastname, useremail, session["user_id"])
-        return redirect("/")
+        
+        # Show the user that the project was successfully logged
+        flash('Profile Successfully Updated')
+        return render_template('success.html')
 
     # if request.method == "GET" select user info from user table and return to form.
     user_info =  db.execute("SELECT firstname, lastname, useremail FROM users WHERE id = ?;", session["user_id"])

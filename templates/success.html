@@ -10,12 +10,12 @@
       {% with messages = get_flashed_messages() %}
          {% if messages %}
             {% for message in messages %}
-               {{ message }}
+               <h3>{{ message }}</h3>
             {% endfor %}
          {% endif %}
       {% endwith %}
    </div>
-
-<button class="nav-item active button"><a class="nav-link" href="/">Home</a></button>
+<p></p>
+<button class="nav-item active button"><a class="nav-link" href={{ url_for("index") }}>Home</a></button>
 
 {% endblock %}

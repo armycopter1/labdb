@@ -26,30 +26,30 @@
     <body>
         <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
-            <div class="border-end bg-secondary bg-opacity-25" id="sidebar-wrapper">
+            <div class="border-end bg-info" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom">
                     <img src="static/images/logoblue1.png" class="img-fluid-cust" alt="KRI-Color Logo">
                 </div>
                 {% if session["admin"] %}
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("request_exp") }}>Request Development</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("request_std") }}>Request Standard Sample</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("experiments") }}>Open Developments</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("internals") }}>Open Internal Evals</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("stds") }}>Open Std Requests</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("history") }}>Completed Developments</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("hist_stds") }}>Completed Std Samples</a>
+                    <a class="list-group-item list-group-item-action list-group-item-info p-3" href={{ url_for("request_exp") }}>Request Development</a>
+                    <a class="list-group-item list-group-item-action list-group-item-info p-3" href={{ url_for("experiments") }}>Open Developments</a>
+                    <a class="list-group-item list-group-item-action list-group-item-info p-3" href={{ url_for("history") }}>Completed Developments</a>
+                    <a class="list-group-item list-group-item-action list-group-item-warning p-3" href={{ url_for("request_std") }}>Request Standard Sample</a>
+                    <a class="list-group-item list-group-item-action list-group-item-warning p-3" href={{ url_for("stds") }}>Open Std Requests</a>
+                    <a class="list-group-item list-group-item-action list-group-item-warning p-3" href={{ url_for("hist_stds") }}>Completed Std Samples</a>
+                    <a class="list-group-item list-group-item-action list-group-item-success p-3" href={{ url_for("internals") }}>Open Internal Evals</a>
                     <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("users") }}>Users</a>
                 </div>
                 {% elif session["user_id"] %}
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("request_exp") }}>Request Experiment</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("request_std") }}>Request Standard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("experiments") }}>Open Experiments</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("internals") }}>Open Internal Evals</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("stds") }}>Open Std Requests</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("history") }}>Completed Exps</a>
-                    <a class="list-group-item list-group-item-action list-group-item-secondary p-3" href={{ url_for("hist_stds") }}>Completed Stds</a>
+                    <a class="list-group-item list-group-item-action list-group-item-info p-3" href={{ url_for("request_exp") }}>Request Development</a>
+                    <a class="list-group-item list-group-item-action list-group-item-info p-3" href={{ url_for("experiments") }}>Open Developments</a>
+                    <a class="list-group-item list-group-item-action list-group-item-info p-3" href={{ url_for("history") }}>Completed Developments</a>
+                    <a class="list-group-item list-group-item-action list-group-item-warning p-3" href={{ url_for("request_std") }}>Request Standard Sample</a>
+                    <a class="list-group-item list-group-item-action list-group-item-warning p-3" href={{ url_for("stds") }}>Open Std Requests</a>
+                    <a class="list-group-item list-group-item-action list-group-item-warning p-3" href={{ url_for("hist_stds") }}>Completed Std Samples</a>
+                    <a class="list-group-item list-group-item-action list-group-item-success p-3" href={{ url_for("internals") }}>Open Internal Evals</a>
                 </div>
                 {% else %}
                 <div class="list-group list-group-flush">
