@@ -33,11 +33,11 @@ def after_request(response):
 
 # Setup email
 app.config["MAIL_DEFAULT_SENDER"] = os.environ["MAIL_DEFAULT_SENDER"]
-app.config["MAIL_PASSWORD"] = 'YWExzCmvf5RsgF79'
+app.config["MAIL_PASSWORD"] = os.environ["MAIL_PASSWORD"]
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_SERVER"] = "smtp-relay.sendinblue.com"
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = 'armycopter@gmail.com'
+app.config["MAIL_USERNAME"] = os.environ["MAIL_USERNAME"]
 mail = Mail(app)
 
 # <!--index, request, completed, active routes below -->
