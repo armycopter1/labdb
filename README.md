@@ -51,8 +51,6 @@ ENVIRONMENTAL VARIABLES -  You must set your environmental variables prior to us
 
 I have deployed this to Heroku and am currently working through transitioning SQLite to PostgreSQL. You will notice the Procfile in my folder. This is only needed for Heroku and not for local use.
 
-You will also see hello_flask folder. This is only used for my virtual environment while running visual studio on my local machine. It is not needed if you will be running this on github VS codespace.
-
 How to use the KC LAB Database
 
 1. The home page before registration.
