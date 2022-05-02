@@ -45,9 +45,9 @@ urllib3==1.26.9
 Werkzeug==2.1.1
 
 ENVIRONMENTAL VARIABLES -  You must set your environmental variables prior to use in order for the application to run.
-1. KEY MAIL_DEFAULT_SENDER VALUE: kcprinter@gmail.com
-2. KEY MAIL_PASSWORD VALUE: xsmtpsib-645cd5201411ebd61a6df231f5a1933ab82dcf8757d5fa4c8ab03e3fcb4b72c8-4PT5CspYDxbEm8Nq
-3. KEY MAIL_USERNAME VALUE: armycopter@gmail.com
+1. KEY MAIL_DEFAULT_SENDER VALUE: type a sender email
+2. KEY MAIL_PASSWORD VALUE: type a password to an smtp server
+3. KEY MAIL_USERNAME VALUE: type a username to an smtp server
 
 I have deployed this to Heroku and am currently working through transitioning SQLite to PostgreSQL. You will notice the Procfile in my folder. This is only needed for Heroku and not for local use.
 
