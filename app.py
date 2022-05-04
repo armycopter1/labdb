@@ -27,7 +27,7 @@ Session(app)
 #                                  host="127.0.0.1",
 #                                  port="5432",
 #                                  database="lab")
-database_url = os.environ.get('DATABASE_URL', 'postgresql://')
+database_url = os.environ.get('DATABASE_LOC', 'postgresql://')
 db = SQL(database_url)
 # db.execute("PRAGMA foreign_keys = ON")
 
