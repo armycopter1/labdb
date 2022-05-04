@@ -23,11 +23,6 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 # db = SQL("sqlite:///lab.db")
-#connection = psycopg2.connect(user="postgres",
-#                                  password="Afr1ca7win1100D4!",
-#                                  host="127.0.0.1",
-#                                  port="5432",
-#                                  database="lab")
 database_url = os.environ.get('DATABASE_URL')
 db = SQL(database_url)
 # db.execute("PRAGMA foreign_keys = ON")
