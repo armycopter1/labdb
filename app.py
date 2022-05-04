@@ -28,6 +28,7 @@ Session(app)
 
 # Use this for local
 database_url = os.environ.get('DATABASE_LOC', 'postgresql://')
+database_url
 
 # Use this for both local and Heroku
 db = SQL(database_url)
