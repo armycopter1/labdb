@@ -1,5 +1,4 @@
 import os
-import psycopg2
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
@@ -21,15 +20,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-# db = SQL("sqlite:///lab.db")
-#connection = psycopg2.connect(user="postgres",
-#                                  password="Afr1ca7win1100D4!",
-#                                  host="127.0.0.1",
-#                                  port="5432",
-#                                  database="lab")
-database_url = os.environ.get('DATABASE_URL', 'postgresql://')
-db = SQL(database_url)
-# db.execute("PRAGMA foreign_keys = ON")
+db = SQL("sqlite:///lab.db")
+db.execute("PRAGMA foreign_keys = ON")
 
 @app.after_request
 def after_request(response):
@@ -503,7 +495,7 @@ def login():
         session["useremail"] = rows[0]["useremail"]
 
         # If user is an admin, set admin session
-        if rows[0]["adm"] == True:
+        if rows[0]["adm"] == "Y":
             session["admin"] = rows[0]["adm"]
 
         # Redirect user to home page
