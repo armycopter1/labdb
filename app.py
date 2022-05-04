@@ -1,7 +1,6 @@
 import os
 import psycopg2
 from cs50 import SQL
-import sqlalchemy
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
@@ -27,7 +26,7 @@ Session(app)
 #database_url = os.environ.get('DATABASE_LOC')
 
 # Use this for local
-database_url = os.environ.get('DATABASE_LOC', 'postgresql://')
+database_url = os.environ.get('DATABASE_LOC')
 database_url
 
 # Use this for both local and Heroku
