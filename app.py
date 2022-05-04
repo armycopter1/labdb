@@ -27,7 +27,7 @@ Session(app)
 database_url = os.environ.get('DATABASE_LOC')
 
 # Use this for local
-#database_url = os.environ.get('DATABASE_LOC', 'postgresql://')
+# database_url = ("postgresql://postgres:Afr1ca7win1100D4!@localhost:5432/lab")
 
 # Use this for both local and Heroku
 db = SQL(database_url)
@@ -228,7 +228,7 @@ def request_exp4():
 
 
         # Email the new development request to everyone
-        message = Message("A new Development Request has been submitted!", recipients = ['armycopter@gmail.com'])
+        message = Message("A new Development Request has been submitted!", recipients = ['kclab@kri-color.com'])
         message.html = "<b>NEW DEVELOPMENT REQUEST</b> <p><b>Customer: </b>{}</p> <p><b>Priority: </b>{}</p> <p><b>Date Required: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Ship Method: </b>{}</p> <p><b>Requested By: </b>{}</p>".format(customer, priority, date_required, exp_descrip, ship_request_method, session["username"])
         mail.send(message)
 
@@ -266,7 +266,7 @@ def request_std4():
                    , cust_id, add_id, contact_id, request_user_id, priority, date_required, std_descrip, product, ship_request_method, sample_size)
 
         # Email everyone that a new standard request has been submitted
-        message = Message("A new Sample Request has been submitted!", recipients = ['armycopter@gmail.com'])
+        message = Message("A new Sample Request has been submitted!", recipients = ['kclab@kri-color.com'])
         message.html = "<b>NEW SAMPLE REQUEST</b> <p><b>Customer: </b>{}</p> <p><b>Product: </b>{}</p> <p><b>Priority: </b>{}</p> <p><b>Date Required: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Ship Method: </b>{}</p> <p><b>Sample Size: </b>{}</p> <p><b>Requested By: </b>{}</p>".format(customer, product, priority, date_required, std_descrip, ship_request_method, sample_size, session["username"])
         mail.send(message)
 
@@ -371,7 +371,7 @@ def signoff():
         db.execute("UPDATE devrequest SET date_completed = ?, matched = ?, pphr_percent = ?, exp_number = ?, com_number = ?, total_hours = ?, shipping_company = ?, ship_tracking = ?, notes = ?, completed_user_id = ? WHERE dr_id = ?;", date_completed, matched, pphr_percent, exp_number, com_number, total_hours, shipping_company, ship_tracking, notes, session["user_id"], session["record_ids"])
         
         # Email everyone that a new development request has been submitted
-        message = Message("A Development Request has been completed!", recipients = ['armycopter@gmail.com'])
+        message = Message("A Development Request has been completed!", recipients = ['kclab@kri-color.com'])
         message.html = "A Development request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
         mail.send(message)
         
@@ -400,7 +400,7 @@ def std_signoff():
         db.execute("UPDATE stdrequest SET date_completed = ?, shipping_company = ?, ship_tracking = ?, completed_user_id = ? WHERE std_id = ?;", date_completed, shipping_company, ship_tracking, session["user_id"], session["record_ids"])
         
         # Email everyone that a new standard request has been signed off
-        message = Message("A Standard Request has been completed!", recipients = ['armycopter@gmail.com'])
+        message = Message("A Standard Request has been completed!", recipients = ['kclab@kri-color.com'])
         message.html = "A standard sample request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
         mail.send(message)
 
