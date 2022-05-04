@@ -23,7 +23,13 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 # db = SQL("sqlite:///lab.db")
-database_url = os.environ.get('DATABASE_LOC')
+# Use this for pushing to Heroku
+#database_url = os.environ.get('DATABASE_LOC')
+
+# Use this for local
+database_url = os.environ.get('DATABASE_LOC', 'postgresql://')
+
+# Use this for both local and Heroku
 db = SQL(database_url)
 # db.execute("PRAGMA foreign_keys = ON")
 
