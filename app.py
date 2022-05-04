@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import sqlalchemy
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
@@ -23,11 +24,10 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 # db = SQL("sqlite:///lab.db")
 # Use this for pushing to Heroku
-#database_url = os.environ.get('DATABASE_LOC')
+database_url = os.environ.get('DATABASE_LOC')
 
 # Use this for local
-database_url = os.environ.get('DATABASE_LOC')
-database_url
+#database_url = os.environ.get('DATABASE_LOC', 'postgresql://')
 
 # Use this for both local and Heroku
 db = SQL(database_url)
