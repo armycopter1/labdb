@@ -1,6 +1,7 @@
 import os
 import psycopg2
 from cs50 import SQL
+import sqlalchemy
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
@@ -27,7 +28,7 @@ Session(app)
 #                                  host="127.0.0.1",
 #                                  port="5432",
 #                                  database="lab")
-database_url = os.environ.get('DATABASE_LOC', 'postgresql://')
+database_url = os.environ.get('DATABASE_LOC', 'postgresql+psycopg2://')
 db = SQL(database_url)
 # db.execute("PRAGMA foreign_keys = ON")
 
