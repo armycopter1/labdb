@@ -24,10 +24,10 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 # db = SQL("sqlite:///lab.db")
 # Use this for pushing to Heroku
-database_url = os.environ.get('DATABASE_LOC')
+# database_url = os.environ.get('DATABASE_LOC')
 
 # Use this for local
-#database_url = ("postgresql://postgres:Afr1ca7win1100D4!@localhost:5432/lab")
+database_url = ("postgresql://postgres:Afr1ca7win1100D4!@localhost:5432/lab")
 
 # Use this for both local and Heroku
 db = SQL(database_url)
@@ -190,32 +190,33 @@ def request_std3():
 def request_exp4():
     """Enter a development request part 4"""
     if request.method =="POST":
+        none = "none"
         cust_id = session["cust_id"]
         add_id = session["add_id"]
         contact_id = session["contact_id"]
         request_user_id = session["user_id"]
-        priority = request.form.get("priority")
+        priority = request.form.get("priority") or none
         date_required = request.form.get("date_required")
-        exp_descrip = request.form.get("exp_descrip")
-        process = request.form.get("process")
-        ship_request_method = request.form.get("ship_request_method")
-        part_descrip = request.form.get("part_descrip")
-        color = request.form.get("color")
-        material_type = request.form.get("material_type")
-        clr_filled = request.form.get("clr_filled")
-        supplied_mat = request.form.get("supplied_mat")
-        match_type = request.form.get("match_type")
-        pantone = request.form.get("pantone")
-        exact = request.form.get("exact")
-        sample_size = request.form.get("sample_size")
-        finish = request.form.get("finish")
-        fda = request.form.get("fda")
-        other_reg = request.form.get("other_reg")
-        cure_type = request.form.get("cure_type")
-        cure_time = request.form.get("cure_time")
-        cure_temp = request.form.get("cure_temp")
-        pc_time = request.form.get("pc_time")
-        pc_temp = request.form.get("pc_temp")
+        exp_descrip = request.form.get("exp_descrip") or none
+        process = request.form.get("process") or none
+        ship_request_method = request.form.get("ship_request_method") or none
+        part_descrip = request.form.get("part_descrip") or none
+        color = request.form.get("color") or none
+        material_type = request.form.get("material_type") or none
+        clr_filled = request.form.get("clr_filled") or none
+        supplied_mat = request.form.get("supplied_mat") or none
+        match_type = request.form.get("match_type") or none
+        pantone = request.form.get("pantone") or none
+        exact = request.form.get("exact") or none
+        sample_size = request.form.get("sample_size") or none
+        finish = request.form.get("finish") or none
+        fda = request.form.get("fda") or none
+        other_reg = request.form.get("other_reg") or none
+        cure_type = request.form.get("cure_type") or none
+        cure_time = request.form.get("cure_time") or none
+        cure_temp = request.form.get("cure_temp") or none
+        pc_time = request.form.get("pc_time") or none
+        pc_temp = request.form.get("pc_temp") or none
         internal = request.form.get("internal")
         customerlist = db.execute("SELECT company FROM customers WHERE id = ?;", cust_id)
         customer = customerlist[0]["company"]
@@ -226,9 +227,9 @@ def request_exp4():
 
 
         # Email the new development request to everyone
-        message = Message("A new Development Request has been submitted!", recipients = ['kclab@kri-color.com'])
-        message.html = "<b>NEW DEVELOPMENT REQUEST</b> <p><b>Customer: </b>{}</p> <p><b>Priority: </b>{}</p> <p><b>Date Required: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Ship Method: </b>{}</p> <p><b>Requested By: </b>{}</p>".format(customer, priority, date_required, exp_descrip, ship_request_method, session["username"])
-        mail.send(message)
+        #message = Message("A new Development Request has been submitted!", recipients = ['kclab@kri-color.com'])
+        #message.html = "<b>NEW DEVELOPMENT REQUEST</b> <p><b>Customer: </b>{}</p> <p><b>Priority: </b>{}</p> <p><b>Date Required: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Ship Method: </b>{}</p> <p><b>Requested By: </b>{}</p>".format(customer, priority, date_required, exp_descrip, ship_request_method, session["username"])
+        #mail.send(message)
 
         # Show the user that the project was successfully logged
         flash('Project Submitted Successfully')
