@@ -245,17 +245,16 @@ def request_exp4():
 def request_std4():
     """Enter a standard request part 4"""
     if request.method =="POST":
-        none = "none"
         cust_id = session["cust_id"]
         add_id = session["add_id"]
         contact_id = session["contact_id"]
         request_user_id = session["user_id"]
-        product = request.form.get("product") or none
-        priority = request.form.get("priority") or none
-        date_required = request.form.get("date_required") or none
-        std_descrip = request.form.get("std_descrip") or none
-        ship_request_method = request.form.get("ship_request_method") or none
-        sample_size = request.form.get("sample_size") or none
+        product = request.form.get("product")
+        priority = request.form.get("priority")
+        date_required = request.form.get("date_required")
+        std_descrip = request.form.get("std_descrip")
+        ship_request_method = request.form.get("ship_request_method")
+        sample_size = request.form.get("sample_size")
         customerlist = db.execute("SELECT company FROM customers WHERE id = ?;", cust_id)
         customer = customerlist[0]["company"]
 
@@ -340,11 +339,10 @@ def add_add():
 @app.route("/add_contact", methods=['POST'])
 def add_contact():
     # Get company contact info from modal
-    none = "none"
-    firstname = request.form.get("firstname") or none
-    lastname = request.form.get("lastname") or none
-    phone = request.form.get("phone") or none
-    email = request.form.get("email") or none
+    firstname = request.form.get("firstname")
+    lastname = request.form.get("lastname")
+    phone = request.form.get("phone")
+    email = request.form.get("email")
 
     #Add into database
     db.execute("INSERT INTO contacts (firstname, lastname, phone, email, cust_id) VALUES(?, ?, ?, ?, ?);", firstname, lastname, phone, email, session["cust_id"])
