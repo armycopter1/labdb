@@ -325,6 +325,15 @@ def add_cust():
     db.execute("INSERT INTO customers (company) VALUES(?);", company)
     return redirect("request_exp")
 
+@app.route("/add_cust_std", methods=['POST'])
+def add_cust_std():
+    # Get company name from modal
+    company = request.form.get("company")
+
+    #Add into database
+    db.execute("INSERT INTO customers (company) VALUES(?);", company)
+    return redirect("request_std")
+
 @app.route("/add_add", methods=['POST'])
 def add_add():
     # Get company address from modal
@@ -339,6 +348,20 @@ def add_add():
     db.execute("INSERT INTO addresses (add1, add2, city, state, zip, country, cust_id) VALUES(?, ?, ?, ?, ?, ?, ?);", add1, add2, city, state, zip, country, session["cust_id"])
     return redirect("request_exp2")
 
+@app.route("/add_add_std", methods=['POST'])
+def add_add_std():
+    # Get company address from modal
+    add1 = request.form.get("add1")
+    add2 = request.form.get("add2")
+    city = request.form.get("city")
+    state = request.form.get("state")
+    zip = request.form.get("zip")
+    country = request.form.get("country")
+
+    #Add into database
+    db.execute("INSERT INTO addresses (add1, add2, city, state, zip, country, cust_id) VALUES(?, ?, ?, ?, ?, ?, ?);", add1, add2, city, state, zip, country, session["cust_id"])
+    return redirect("request_std2")
+
 @app.route("/add_contact", methods=['POST'])
 def add_contact():
     # Get company contact info from modal
@@ -351,27 +374,45 @@ def add_contact():
     db.execute("INSERT INTO contacts (firstname, lastname, phone, email, cust_id) VALUES(?, ?, ?, ?, ?);", firstname, lastname, phone, email, session["cust_id"])
     return redirect("request_exp3")
 
+@app.route("/add_contact_std", methods=['POST'])
+def add_contact_std():
+    # Get company contact info from modal
+    firstname = request.form.get("firstname")
+    lastname = request.form.get("lastname")
+    phone = request.form.get("phone")
+    email = request.form.get("email")
+
+    #Add into database
+    db.execute("INSERT INTO contacts (firstname, lastname, phone, email, cust_id) VALUES(?, ?, ?, ?, ?);", firstname, lastname, phone, email, session["cust_id"])
+    return redirect("request_std3")
+
 @app.route("/signoff", methods=["GET", "POST"])
 @login_required
 def signoff():
     # If request method is POST, insert the signoff info from signoff page to devrequest table.
+    none = "none"
     if request.method == "POST":
         date_completed = request.form.get("date_completed")
-        matched = request.form.get("matched")
-        pphr_percent = request.form.get("pphr_percent")
-        exp_number = request.form.get("exp_number")
-        com_number = request.form.get("com_number")
+        matched = request.form.get("matched") or none
+        pphr_percent = request.form.get("pphr_percent") or none
+        exp_number = request.form.get("exp_number") or none
+        com_number = request.form.get("com_number") or none
         total_hours = request.form.get("total_hours")
-        shipping_company = request.form.get("shipping_company")
-        ship_tracking = request.form.get("ship_tracking")
-        notes = request.form.get("notes")
+        shipping_company = request.form.get("shipping_company") or none
+        ship_tracking = request.form.get("ship_tracking") or none
+        notes = request.form.get("notes") or none
 
         # Update the devrequest table with new information
         db.execute("UPDATE devrequest SET date_completed = ?, matched = ?, pphr_percent = ?, exp_number = ?, com_number = ?, total_hours = ?, shipping_company = ?, ship_tracking = ?, notes = ?, completed_user_id = ? WHERE dr_id = ?;", date_completed, matched, pphr_percent, exp_number, com_number, total_hours, shipping_company, ship_tracking, notes, session["user_id"], session["record_ids"])
         
+        # Provide info for emailing after signoff completed
+        info = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id WHERE dr_id = ?;", session["record_ids"])
+        company = info[0]["company"]
+        exp_descrip = info[0]["exp_descrip"]
+
         # Email everyone that a new development request has been submitted
         message = Message("A Development Request has been completed!", recipients = ['kclab@kri-color.com'])
-        message.html = "A Development request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
+        message.html = "A Development request has been completed. <p><b>Company: </b>{}</p> <p><b>Experiment Description: </b>{}</p> <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(company, exp_descrip, shipping_company, ship_tracking, session["username"])
         mail.send(message)
         
         # Return user back to the open experiments table
@@ -398,9 +439,14 @@ def std_signoff():
 
         db.execute("UPDATE stdrequest SET date_completed = ?, shipping_company = ?, ship_tracking = ?, completed_user_id = ? WHERE std_id = ?;", date_completed, shipping_company, ship_tracking, session["user_id"], session["record_ids"])
         
+        # Provide info for email after signoff completed
+        info = db.execute("SELECT * FROM stdrequest JOIN customers ON stdrequest.cust_id = customers.id JOIN contacts ON stdrequest.contact_id = contacts.id WHERE std_id = ?;", session["record_ids"])
+        company = info[0]["company"]
+        std_descrip = info[0]["std_descrip"]
+
         # Email everyone that a new standard request has been signed off
         message = Message("A Standard Request has been completed!", recipients = ['kclab@kri-color.com'])
-        message.html = "A standard sample request has been completed. <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(shipping_company, ship_tracking, session["username"])
+        message.html = "A standard sample request has been completed. <p><b>Customer: </b>{}</p> <p><b>Description: </b>{}</p> <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(company, std_descrip, shipping_company, ship_tracking, session["username"])
         mail.send(message)
 
         # Return user back to open standard requests
