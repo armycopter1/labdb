@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Delete
+{% endblock %}
+
+<!--some code borrowed from https://stackoverflow.com/questions/61987454/how-to-make-bootstrap-table-filter-control-work-with-flask-jinja-and-dataframe-->
+
+{% block main %}
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="development" role="tabpanel" aria-labelledby="development-tab">
+        <h4 class="mt-2">Delete Selected Development Request?</h4>
+        <p></p>
+        <div style = "border: 1px solid lightgray; padding: 10px; margin: 10px">
+            <p><b>{{ results[0]["company"]  }}</b></p>
+            <p> {{ results[0]["firstname"]  }}  {{ results[0]["lastname"]  }} <b>/</b> {{ results[0]["email"]  }} </p>
+    </div>
+
+    <form action="/delete_exp" method="POST">
+        <label for="deleted"><b>Delete?</b></label>
+              <select name="deleted" type="text" class = "selectpicker form-control">
+              <option disabled selected>Select</option>
+                <option value="Yes">Yes</option>
+              </select>
+        <!--<input type="submit" value="Register">-->
+        <button class="btn btn-primary" type="submit">Signoff</button>
+    </form>
+{% endblock %}

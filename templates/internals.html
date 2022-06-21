@@ -61,7 +61,8 @@
                       {% for row in tableA %}
                       <tr>
                           <!--special characters and spaces not allowed in data-field name-->
-                          <td><a href="{{ url_for("signoff", record_id = row["dr_id"]) }}"><input type="submit" name="edit_btn" value="Signoff"></input></a></td>
+                          <td><a href="{{ url_for("signoff", record_id = row["dr_id"]) }}"><input type="submit" name="edit_btn" value="Signoff"></input></a>
+                          <a href="{{ url_for('delete_exp', record_id = row['dr_id']) }}"><input type="submit" name="edit_btn2" value="Delete"></input></a></td>
                           <td>{{ row.priority }}</td>
                           <td>{{ row.date_required }}</td>
                           <td>{{ row.company }}</td>

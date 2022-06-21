@@ -21,8 +21,9 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
+# Configure CS50 Library to use SQLite database - No longer used at all
 # db = SQL("sqlite:///lab.db")
+
 # Use this for pushing to Heroku
 database_url = os.environ.get('DATABASE_LOC')
 
@@ -68,6 +69,10 @@ def request_exp():
         # Get company name from request_ext
         cust_id = request.form.get("company")
 
+        # Validate that a company was selected
+        if not cust_id:
+            return apology("No Company Selected")
+
         # Get company ID to set session
         rows = db.execute("SELECT * FROM customers WHERE id = ?;", cust_id)
         session["cust_id"] = rows[0]["id"]
@@ -88,6 +93,10 @@ def request_std():
 
         # Get company name from request_ext
         cust_id = request.form.get("company")
+
+        # Validate that a company was selected
+        if not cust_id:
+            return apology("No Company Selected")
 
         # Get company ID to set session
         rows = db.execute("SELECT * FROM customers WHERE id = ?;", cust_id)
@@ -110,6 +119,10 @@ def request_exp2():
         # Get company address from request_ext2
         add_id = request.form.get("address")
 
+        # Validate that an address was selected
+        if not add_id:
+            return apology("No Address Selected")
+
         # Get address ID to set session
         rows  = db.execute("SELECT * FROM addresses WHERE id = ?;", add_id)
         session["add_id"] = rows[0]["id"]
@@ -130,6 +143,10 @@ def request_std2():
 
         # Get company address from request_ext2
         add_id = request.form.get("address")
+
+        # Validate that an address was selected
+        if not add_id:
+            return apology("No Address Selected")
 
         # Get address ID to set session
         rows  = db.execute("SELECT * FROM addresses WHERE id = ?;", add_id)
@@ -152,6 +169,10 @@ def request_exp3():
         # Get contact name from request_ext3
         contact_id = request.form.get("contact")
 
+        # Validate that a contact was selected
+        if not contact_id:
+            return apology("No Contact Selected")
+
         # Get contact ID to set session
         rows  = db.execute("SELECT * FROM contacts WHERE id = ?;", contact_id)
         session["contact_id"] = rows[0]["id"]
@@ -172,6 +193,10 @@ def request_std3():
 
         # Get contact name from request_ext
         contact_id = request.form.get("contact")
+
+        # Validate that a contact was selected
+        if not contact_id:
+            return apology("No Contact Selected")
 
         # Get contact ID to set session
         rows  = db.execute("SELECT * FROM contacts WHERE id = ?;", contact_id)
@@ -285,21 +310,21 @@ def request_std4():
 @login_required
 def experiments():
     """List of all open experiment development requests - external facing"""
-    data = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id JOIN users ON devrequest.request_user_id = users.id WHERE devrequest.date_completed is null and devrequest.internal <> 'Yes'  ORDER BY devrequest.date_required, devrequest.priority;")
+    data = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id JOIN users ON devrequest.request_user_id = users.id WHERE devrequest.date_completed is null and devrequest.internal <> 'Yes' and devrequest.deleted is null ORDER BY devrequest.date_required, devrequest.priority;")
     return render_template('experiments.html', tableA = data)
 
 @app.route("/internals")
 @login_required
 def internals():
     """List of all open experiment development requests - internal facing"""
-    data = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id JOIN users ON devrequest.request_user_id = users.id WHERE devrequest.date_completed is null and devrequest.internal <> 'No'  ORDER BY devrequest.date_required, devrequest.priority;")
+    data = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id JOIN users ON devrequest.request_user_id = users.id WHERE devrequest.date_completed is null and devrequest.internal <> 'No'  and devrequest.deleted is null ORDER BY devrequest.date_required, devrequest.priority;")
     return render_template('internals.html', tableA = data)
 
 @app.route("/stds")
 @login_required
 def stds():
     """Request a standard sample or colorbook"""
-    data = db.execute("SELECT * FROM stdrequest JOIN customers ON stdrequest.cust_id = customers.id JOIN contacts ON stdrequest.contact_id = contacts.id JOIN users ON stdrequest.request_user_id = users.id WHERE stdrequest.date_completed is null ORDER BY stdrequest.date_required, stdrequest.priority;")
+    data = db.execute("SELECT * FROM stdrequest JOIN customers ON stdrequest.cust_id = customers.id JOIN contacts ON stdrequest.contact_id = contacts.id JOIN users ON stdrequest.request_user_id = users.id WHERE stdrequest.date_completed is null and stdrequest.deleted is null ORDER BY stdrequest.date_required, stdrequest.priority;")
     return render_template('stds.html', tableA = data)
 
 @app.route("/history")
@@ -428,6 +453,48 @@ def signoff():
             results = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id WHERE dr_id = ?;", session["record_ids"])
             return render_template("signoff.html", results=results)
 
+@app.route("/edit", methods=["GET", "POST"])
+@login_required
+def edit():
+    # If request method is POST, insert the signoff info from signoff page to edit table.
+    none = "none"
+    if request.method == "POST":
+        date_completed = request.form.get("date_completed")
+        matched = request.form.get("matched") or none
+        pphr_percent = request.form.get("pphr_percent") or none
+        exp_number = request.form.get("exp_number") or none
+        com_number = request.form.get("com_number") or none
+        total_hours = request.form.get("total_hours")
+        shipping_company = request.form.get("shipping_company") or none
+        ship_tracking = request.form.get("ship_tracking") or none
+        notes = request.form.get("notes") or none
+
+        # Update the devrequest table with new information
+        db.execute("UPDATE devrequest SET date_completed = ?, matched = ?, pphr_percent = ?, exp_number = ?, com_number = ?, total_hours = ?, shipping_company = ?, ship_tracking = ?, notes = ?, completed_user_id = ? WHERE dr_id = ?;", date_completed, matched, pphr_percent, exp_number, com_number, total_hours, shipping_company, ship_tracking, notes, session["user_id"], session["record_ids"])
+        
+        # Provide info for emailing after signoff completed
+        info = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id WHERE dr_id = ?;", session["record_ids"])
+        company = info[0]["company"]
+        exp_descrip = info[0]["exp_descrip"]
+
+        # Email everyone that a new development request has been submitted
+        message = Message("A Development Request has been completed!", recipients = ['kclab@kri-color.com'])
+        message.html = "A Development request has been completed. <p><b>Company: </b>{}</p> <p><b>Experiment Description: </b>{}</p> <p><b>Shipped by: </b>{}</p> <p><b>Tracking number: </b>{}</p> <p><b>Signed Off By: </b>{}</p>".format(company, exp_descrip, shipping_company, ship_tracking, session["username"])
+        mail.send(message)
+        
+        # Return user back to the open experiments table
+        return redirect("experiments")
+    else:
+        # If for some reason, no record is returned, return an apology.
+        session["record_ids"] = request.args.get("record_id")
+        if not session["record_ids"]:
+            return apology("no record")
+
+        # If request method is GET, Get record ID from the row in open experiments page after clicking signoff
+        else:
+            results = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id WHERE dr_id = ?;", session["record_ids"])
+            return render_template("edit.html", results=results)
+
 @app.route("/std_signoff", methods=["GET", "POST"])
 @login_required
 def std_signoff():
@@ -460,6 +527,50 @@ def std_signoff():
         else:
             results = db.execute("SELECT * FROM stdrequest JOIN customers ON stdrequest.cust_id = customers.id JOIN contacts ON stdrequest.contact_id = contacts.id WHERE std_id = ?;", session["record_ids"])
             return render_template("std_signoff.html", results=results)
+
+@app.route("/delete_exp", methods=["GET", "POST"])
+@login_required
+def delete_exp():
+
+    if request.method == "POST":
+        deleted = request.form.get("deleted")
+      
+        # Update the devrequest table with new information
+        db.execute("UPDATE devrequest SET deleted = ? WHERE dr_id = ?;", deleted, session["record_ids"])
+        
+        # Return user back to open exp requests
+        return redirect("index")
+    else:
+        # If for some reason, no record is returned, return an apology.
+        session["record_ids"] = request.args.get("record_id")
+        if not session["record_ids"]:
+            return apology("no record")
+        # If request method is GET, Get record ID from the row in open experiments page after clicking signoff
+        else:
+            results = db.execute("SELECT * FROM devrequest JOIN customers ON devrequest.cust_id = customers.id JOIN contacts ON devrequest.contact_id = contacts.id WHERE dr_id = ?;", session["record_ids"])
+            return render_template("delete.html", results=results)
+
+@app.route("/delete_std", methods=["GET", "POST"])
+@login_required
+def delete_std():
+
+    if request.method == "POST":
+        deleted = request.form.get("deleted")
+      
+        # Update the devrequest table with new information
+        db.execute("UPDATE stdrequest SET deleted = ? WHERE std_id = ?;", deleted, session["record_ids"])
+        
+        # Return user back to open exp requests
+        return redirect("stds")
+    else:
+        # If for some reason, no record is returned, return an apology.
+        session["record_ids"] = request.args.get("record_id")
+        if not session["record_ids"]:
+            return apology("no record")
+        # If request method is GET, Get record ID from the row in open experiments page after clicking signoff
+        else:
+            results = db.execute("SELECT * FROM stdrequest JOIN customers ON stdrequest.cust_id = customers.id JOIN contacts ON stdrequest.contact_id = contacts.id WHERE std_id = ?;", session["record_ids"])
+            return render_template("delete_std.html", results=results)
 
 # <!--all user register, login, logout routes below-->
 
